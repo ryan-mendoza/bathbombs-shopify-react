@@ -1,25 +1,26 @@
 import React, { Component } from 'react'
 import Client from 'shopify-buy';
 
-const ShopContext = React.createContect();
+const ShopContext = React.createContext();
 
 const client = Client.buildClient({
     domain: process.env.REACT_APP_SHOPIFY_DOMAIN,
     storefrontAccessToken: process.env.REACT_APP_SHOPIFY_API
 });
-
 export class ShopProvider extends Component {
 
     state = {
         product: {},
-        products =[],
+        products: [],
         checkout: {},
-        isCartOpen = false,
-        isMenuOpen = false
+        isCartOpen: false,
+        isMenuOpen: false
     }
 
     createCheckout = async () => {
-
+        const checkout = await client.checkout.create();
+        localStorage.setItem("checkout-id", checkout.id);
+        this.setState({ checkout: checkout });
     }
 
     fetchCheckout = async () => {
