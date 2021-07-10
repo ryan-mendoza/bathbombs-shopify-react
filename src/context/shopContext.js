@@ -34,20 +34,22 @@ export class ShopProvider extends Component {
 
     }
 
-    featchAllProducts = async () => {
-
+    fetchAllProducts = async () => {
+        const products = await client.product.fetchAll();
+        this.setState({ products: products })
     }
 
     fetchProductWithHandle = async (handle) => {
-
+        const product = await client.product.fetchByHandle(handle);
+        this.setState({ product: product })
     }
 
-    closeCart = () => {}
+    closeCart = () => { }
 
-    openCart = () => {}
-    
+    openCart = () => { }
+
     closeMenu = () => { }
-    
+
     openMenu = () => { }
 
     render() {
@@ -61,6 +63,6 @@ export class ShopProvider extends Component {
 
 const ShopConsumer = ShopContext.Consumer
 
-export {ShopConsumer, ShopContext}
+export { ShopConsumer, ShopContext }
 
 export default ShopProvider
