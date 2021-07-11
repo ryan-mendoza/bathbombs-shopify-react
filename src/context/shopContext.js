@@ -33,7 +33,7 @@ export class ShopProvider extends Component {
 
 
 
-    fetchCheckout = async (checkoutId) => {
+    fetchCheckout = (checkoutId) => {
         client.checkout
             .fetch(checkoutId)
             .then((checkout) => {
@@ -72,7 +72,19 @@ export class ShopProvider extends Component {
         // console.log(this.state.checkout)
 
         return (
-            <ShopContext.Provider>
+            <ShopContext.Provider
+                value={{
+                    ...this.state,
+                    fetchAllProducts: this.fetchAllProducts,
+                    fetchProductWithHandle: this.fetchProductWithHandle,
+                    addItemToCheckout: this.addItemToCheckout,
+                    removeLineItem: this.removeLineItem,
+                    closeCart: this.closeCart,
+                    openCart: this.openCart,
+                    closeMenu: this.closeMenu,
+                    openMenu: this.openMenu,
+
+                }}>
                 {this.props.children}
             </ShopContext.Provider>
         )
