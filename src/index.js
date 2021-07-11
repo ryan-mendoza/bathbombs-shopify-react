@@ -7,7 +7,9 @@ import ShopProvider from './context/shopContext'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ShopProvider>
+      <App />
+    </ShopProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

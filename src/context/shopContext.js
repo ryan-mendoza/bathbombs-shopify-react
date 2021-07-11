@@ -17,14 +17,28 @@ export class ShopProvider extends Component {
         isMenuOpen: false
     }
 
-    createCheckout = async () => {
-        const checkout = await client.checkout.create();
-        localStorage.setItem("checkout-id", checkout.id);
-        this.setState({ checkout: checkout });
+    componentDidMount() {
+        if (localStorage.checkout_id) {
+            this.fetchCheckout(localStorage.checkout_id)
+        } else {
+            this.createCheckout()
+        }
     }
 
-    fetchCheckout = async () => {
+    createCheckout = async () => {
+        const checkout = await client.checkout.create();
+        localStorage.setItem("checkout_id", checkout.id)
+        this.setState({ checkout: checkout });
+    };
 
+
+
+    fetchCheckout = async (checkoutId) => {
+        client.checkout
+            .fetch(checkoutId)
+            .then((checkout) => {
+                this.setState({ checkout: checkout })
+            })
     }
 
     addItemToCheckout = async () => {
@@ -54,6 +68,9 @@ export class ShopProvider extends Component {
     openMenu = () => { }
 
     render() {
+
+        // console.log(this.state.checkout)
+
         return (
             <ShopContext.Provider>
                 {this.props.children}
